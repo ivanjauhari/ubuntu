@@ -1,0 +1,63 @@
+-Sudo su
+-Apt update && apt upgrade
+
+Konfigurasi DNS
+-apt install bind9 resolvconf dnsutils -y
+-cd /etc/bind
+-ls
+-cp db.local sija.nomeja.nama.net
+-cp db.127 sija.nomeja.nama.net.reverse
+-nano sija.nomeja.nama.net
+  localhost=dns.net. root.dns.net.
+  (Tambah baris baru) ; A Record kita @ IN A ipubuntu 
+  (Baris bawah sendiri baru) www.dnstadi.net. IN CNAME dns.com.
+-nano sija.nomeja.nama.net.reserve
+-nano named.conf.local
+-/etc/init.d/named restart
+-nano /etc/resolv.conf
+  nameserver ip
+  search dns.net
+-nslookup dns.net
+-nslookup www.dns.net
+-nslookup ip
+
+Dicek dicmd
+Ganti ethernet, yang atas jadi 2
+Yang lain ip mu
+
+-Apt install apache2 -y
+-Apt install mysql-server Mysql-client -y
+-Apt instal phpmyadmin -y
+-Apt install php -y
+
+MASUK KE MYSQL
+
+-Mysql
+-Create database wordpress
+-Create user ‘bona’@‘localhost’ identified by ‘password’
+-grant all privileges on wordpress.* to ‘bona’@‘localhost’
+-Flush privileges
+
+KELUAR DARI MYSQL
+
+-Apt instal wget unzip
+-Wget https://wordpress.org/latest.zip
+-Unzip latest.zip
+-cd /var/www/html
+-chmod -R 755 /var/www/html/wordpress
+-chown www-data:www-data -R /var/www/html/wordpress
+-nano /etc/apache2/sites-available/wordpress.conf
+
+MASUK KE SSH
+
+-Git clone https://github.com/firmansyahirsyaad76/wordpress.conf.git
+-cd wordpress.conf
+-mv wordpress.conf /etc/apache2/sites-available
+
+MASUK KE UBUNTU LAGI
+
+-nano /etc/apache2/sites-available/wordpress.conf
+-a2dissite 000-default.conf
+-a2ensite wordpress.conf
+-a2enmod rewrite
+-systemctl restart apache2
